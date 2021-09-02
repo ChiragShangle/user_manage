@@ -1,0 +1,14 @@
+{% extends 'navbaruser.html' %} {% block title %} Dashboard{% endblock title %}
+{% block body %}
+<div id="details">
+  <div class="m-auto w-75 mt-5 text-danger">
+    {% for det in details %}
+    <h1 class="mt-4">Name: {{det.name}}</h1>
+    <h2 class="mt-4">Email Address: {{det.email}}</h2>
+    <h2 class="mt-4">Date Of Birth: {{det.date}}</h2>
+    <h2 class="mt-4">Mobile Number: {{det.phone}}</h2>
+    <h2 class="mt-4">Address: {{det.address}}</h2>
+    {% endfor %}
+  </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <title> {% block title %} {% endblock title %} </title>
+  </head>
+  <body
+    style="background-image: url(/static/DRDO.jpg); background-size: cover"
+  >
+    <nav class="navbar navbar-dark bg-dark">
+     <a href="/">
+      <h3 class="text-info" style="cursor: pointer"">
+        User Management
+      </h3>
+    </a>
+      <div>
+        <a href="/login"
+          ><button
+            type="button"
+            class="btn btn-warning"
+            style="margin-right: 20px"
+          >
+            Login
+          </button>
+        </a>
+        <a href="/register">
+          <button
+            type="button"
+            class="btn btn-danger"
+            style="margin-right: 50px"
+          >
+            Register
+          </button>
+        </a>
+      </div>
+    </nav>
+   {% block body %}{% endblock body %}
+<script>
+     function login() {
+  document.getElementById("default").style.display = "none";
+  document.getElementById("login").style.display = "initial";
+
+  document.getElementById("register").style.display = "none";
+}
+
+function register() {
+  document.getElementById("default").style.display = "none";
+  document.getElementById("register").style.display = "initial";
+  document.getElementById("login").style.display = "none";
+}
+function def() {
+  document.getElementById("default").style.display = "initial";
+  document.getElementById("register").style.display = "none";
+  document.getElementById("login").style.display = "none";
+}
+      function otp1() {
+        document.getElementById("otp1").style.display = "initial";
+      }
+
+      function otp2() {
+        document.getElementById("otp2").style.display = "initial";
+      }
+</script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

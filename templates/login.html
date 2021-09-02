@@ -1,0 +1,48 @@
+{% extends 'navbarhome.html' %} {% block title %}Login {% endblock title %}
+{%block body %}
+<div id="login">
+  <form class="w-50 m-auto mt-5" method="POST" action="/login">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" name="email" />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/register">
+      <button
+        type="button"
+        class="btn btn-link"
+        style="color: black; font-weight: bloder; font-size: large"
+      >
+        If not registered click here
+      </button>
+    </a>
+    <!-- 
+    <a href="/forgot">
+      <button
+        type="button"
+        class="btn btn-link"
+        style="color: black; font-weight: bloder; font-size: large"
+      >
+        Forgot Password
+      </button>
+    </a>
+ -->
+    {% for message in messages %}
+    <p style="color: red">
+      &nbsp;&nbsp;&nbsp;&nbsp;INVALID USERNAME OR PASSWORD
+    </p>
+    {% endfor %}
+  </form>
+</div>
+
+{% endblock body %}

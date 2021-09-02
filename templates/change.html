@@ -1,0 +1,46 @@
+{% extends 'navbaruser.html' %}
+
+{% block title %} Change Password {% endblock title %} 
+{% block body %}
+    <div "id="change" >
+      <form   class="w-50 m-auto mt-5" method="POST" action="/change">
+      {% csrf_token %}
+        <div class="mb-3">
+            <label for="password" class="form-label"
+              >Old Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="opassword"
+            />
+            </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">New Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="npassword"
+          />
+          </div>
+          
+        <div class="mb-3">
+            <label for="password" class="form-label"
+              >Confirm New Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="cnpassword"
+            />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      
+    <p style="color: red">&nbsp;&nbsp;&nbsp;{{efgh}}</p>
+    <p style="color: red">&nbsp;&nbsp;&nbsp;{{abcd}}</p>
+    </div>
+{% endblock body %}
