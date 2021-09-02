@@ -1,6 +1,6 @@
 {% extends 'navbarhome.html' %} {% block title %}Login {% endblock title %}
 {%block body %}
-<div id="login">
+<div id="login" class="mt-5">
   <form class="w-50 m-auto mt-5" method="POST" action="/login">
     {% csrf_token %}
     <div class="mb-3">
@@ -26,7 +26,6 @@
         If not registered click here
       </button>
     </a>
-    <!-- 
     <a href="/forgot">
       <button
         type="button"
@@ -36,11 +35,9 @@
         Forgot Password
       </button>
     </a>
- -->
+
     {% for message in messages %}
-    <p style="color: red">
-      &nbsp;&nbsp;&nbsp;&nbsp;INVALID USERNAME OR PASSWORD
-    </p>
+    <p style="color: red">INVALID USERNAME OR PASSWORD</p>
     {% endfor %}
   </form>
 </div>

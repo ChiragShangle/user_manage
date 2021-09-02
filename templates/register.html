@@ -1,7 +1,7 @@
 {% extends 'navbarhome.html' %} {% block title %}Register {% endblock title %}
 {% block body %}
 
-<div id="register">
+<div id="register" class="mt-5">
   <form class="w-50 m-auto mt-5" method="POST" action="/register">
     {% csrf_token %}
     <div class="mb-3">
@@ -13,6 +13,14 @@
       <label for="email" class="form-label">Email address</label>
       <input type="email" class="form-control" id="email" name="email" />
     </div>
+    <div class="mb-3" id="otp1">
+      <label for="otp1" class="form-label">Enter otp</label>
+      <input type="password" class="form-control" id="otp1" name="otp1" />
+    </div>
+    <button type="button" class="btn btn-primary d-block mt-3" onclick="otp1()">
+      Verify Email
+    </button>
+
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
       <input
@@ -40,13 +48,6 @@
       <label for="phone" class="form-label">Mobile Number</label>
       <input type="phone" id="phone" name="phone" class="form-control" />
     </div>
-    <div class="mb-3" id="otp1">
-      <label for="otp1" class="form-label">Enter otp</label>
-      <input type="password" class="form-control" id="otp1" name="otp1" />
-    </div>
-    <button type="button" class="btn btn-primary d-block mt-3" onclick="otp1()">
-      Verify Mobile Number
-    </button>
 
     <div class="mb-3">
       <label for="address" class="form-label">Address</label>
@@ -55,7 +56,7 @@
 
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
 
-    <p style="color: red">&nbsp;&nbsp;&nbsp;{{abcd}}</p>
+    <p style="color: red">{{abcd}}</p>
   </form>
 </div>
 

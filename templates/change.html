@@ -2,7 +2,7 @@
 
 {% block title %} Change Password {% endblock title %} 
 {% block body %}
-    <div "id="change" >
+    <div "id="change" class="mt-5">
       <form   class="w-50 m-auto mt-5" method="POST" action="/change">
       {% csrf_token %}
         <div class="mb-3">
@@ -38,9 +38,10 @@
             />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+        
+    <p style="color: red">{{abcd}}</p>
+    <p style="color: red">{{efgh}}</p>
       </form>
       
-    <p style="color: red">&nbsp;&nbsp;&nbsp;{{efgh}}</p>
-    <p style="color: red">&nbsp;&nbsp;&nbsp;{{abcd}}</p>
     </div>
 {% endblock body %}

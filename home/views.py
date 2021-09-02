@@ -1,7 +1,8 @@
 from home.models import Details
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib import messages
 from .models import *
 
 
@@ -31,6 +32,7 @@ def loginuser(request):
                 login(request, user)
                 return redirect('/dash')
             else:
+                messages.error(request, 'INVALID EMAIL OR PASSWORD')
                 return redirect('/login')
         return render(request, 'login.html')
 

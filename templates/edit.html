@@ -1,52 +1,28 @@
-{% extends 'navbaruser.html' %}
+{% extends 'navbaruser.html' %} {% block body %}
+<div id="edit" class="mt-5">
+  <form class="w-50 m-auto mt-5" method="POST" action="/edit">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" name="name" />
+    </div>
 
-{% block title %}Edit Details {% endblock title %} 
-{% block body %}
-    <div id="edit">
-        <form  class="w-50 m-auto mt-5" method="POST" action="/edit">
-        {% csrf_token %}
-          <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="name"
-              name="name"
-            />
-          </div>
-  
-          <div class="mb-3">
-            <label for="date" class="form-label">Date Of Birth</label>
-            <input type="date" name="date" id="date" class="form-control" />
-          </div>
-          <div class="mb-3">
-            <label for="phone" class="form-label">Mobile Number</label>
-            <input type="phone" name="phone" class="form-control" />
-          </div>
-  
-          <div class="mb-3 "" id="otp2"> 
-            <label for="otp2" class="form-label">Enter otp</label>
-            <input
-              type="password"
-              class="form-control"
-              id="otp2"
-              name="otp2"
-            />
-          </div>
-          <button type="button" class="btn btn-primary d-block mt-3" onclick="otp2()">Verify Mobile Number</button>
-          
-        <div class="mb-3">
-          <label for="address" class="form-label">Address</label>
-          <input
-            type="text"
-            class="form-control"
-            id="address"
-            name="address"
-            />
-        </div>
-  
-          <button type="submit" class="btn btn-primary mt-3">Submit</button>
-        </form>
-      </div>
+    <div class="mb-3">
+      <label for="date" class="form-label">Date Of Birth</label>
+      <input type="date" name="date" id="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Mobile Number</label>
+      <input type="phone" name="phone" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <input type="text" class="form-control" id="address" name="address" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>
 
 {% endblock body %}
