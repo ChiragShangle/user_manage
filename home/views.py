@@ -55,7 +55,7 @@ def register(request):
             return render(request, 'login.html', mess)
         else:
             obj = Details(email=email, name=name, password=password,
-                          date=date, address=address, phone=phone)
+                          dob=date, address=address, phone=phone)
             obj.save()
             user = User.objects.create_user(username=email, password=password)
             user.save()
@@ -84,7 +84,7 @@ def forgot(request):
             mess2 = {'abcd': 'BOTH PASSWORDS MUST BE SAME!'}
             return render(request, 'forgot.html', mess2)
 
-        obj = Details(email=email, name=name, date=date,
+        obj = Details(email=email, name=name, dob=date,
                       address=address, phone=phone, password=fpassword)
         obj.save()
 
@@ -102,7 +102,7 @@ def edit(request):
         phone = request.POST.get('phone')
         address = request.POST.get('address')
         obj = Details(email=username, name=name, password=password,
-                      date=date, address=address, phone=phone)
+                      dob=date, address=address, phone=phone)
         obj.save()
         return redirect('/dash')
     return render(request, "edit.html")
@@ -128,7 +128,7 @@ def change(request):
             mess1 = {'efgh': 'ENTER CORRECT OLD PASSWORD!'}
             return render(request, 'change.html', mess1)
 
-        obj = Details(email=username, name=name, date=date,
+        obj = Details(email=username, name=name, dob=date,
                       address=address, phone=phone, password=npassword)
         obj.save()
         user = User(username=username, password=npassword)

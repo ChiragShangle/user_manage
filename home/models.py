@@ -7,7 +7,7 @@ class Details(models.Model):
     password = models.CharField(max_length=30)
     name = models.CharField(max_length=60)
     email = models.EmailField(primary_key=True)
-    date = models.DateField()
+    dob = models.DateField()
     phone = models.CharField(max_length=13)
     address = models.CharField(max_length=200)
 
