@@ -1,47 +1,28 @@
-{% extends 'navbaruser.html' %}
-
-{% block title %} Change Password {% endblock title %} 
-{% block body %}
-    <div "id="change" class="mt-5">
-      <form   class="w-50 m-auto mt-5" method="POST" action="/change">
+{% extends 'navbaruser.html' %}  {% block body %} 
+  
+  <div class="continer">
+    <form method="post" class="form" id="form" action="/change">
       {% csrf_token %}
-        <div class="mb-3">
-            <label for="password" class="form-label"
-              >Old Password</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="opassword"
-            />
-            </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">New Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="npassword"
-          />
-          </div>
-          
-        <div class="mb-3">
-            <label for="password" class="form-label"
-              >Confirm New Password</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="cnpassword"
-            />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-        
-    <p style="color: red">{{abcd}}</p>
-    <p style="color: red">{{efgh}}</p>
-      </form>
-      
-    </div>
-{% endblock body %}
+      <h4 style="font-weight: bolder;">Change Password</h4>
+      <div class="form-group">
+        <label for="password">Old Password</label>
+        <input type="password" name="opassword" class="form-control" required/>
+      </div>
+      <div class="form-group">
+        <label for="password">New Password</label>
+        <input type="password" name="npassword" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Confirm New password</label>
+        <input type="password" name="cnpassword" class="form-control" required/>
+      </div>
+
+      <input type="hidden" name="user_id" value="{{user_id}}" />
+
+      <button class="btn" type="submit">Submit</button>
+    </form>
+  </div>
+
+  {% endblock body %}
+</form>

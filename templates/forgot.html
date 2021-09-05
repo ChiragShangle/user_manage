@@ -1,62 +1,15 @@
-{% extends 'navbarhome.html' %} 
-{% block title %}Forgot Password
-{% endblock title %} 
-{% block body %} 
-  <div id="forgot" class="mt-5">
-      <form   class="w-50 m-auto mt-5" method="POST" action="/change">
-      {% csrf_token %}
-        <div class="mb-3">
-            <label for="email" class="form-label"
-              >Enter Email</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              name="email"
-            />
-      <script>
-        const otp1 = () => {
-          console.log("hello");
-          document.getElementById("otp1").style.display = "initial";
-        }
-      </script>
-       <div class="mb-3" id="otp1" style="display: none;">
-      <label for="otp1" class="form-label">Enter otp</label>
-      <input type="password" class="form-control" id="otp1" name="otp1" />
+{% extends 'navbarhome.html' %} {% block body %}
+
+<div class="continer" style"width:600px>
+  <form class="form px" method="post" id="form" action="/forgot"  style="width:90%">
+    {% csrf_token %}
+    <h4>Forget Password</h4>
+    <div class="form-group">
+      <label for="password">Email</label>
+      <input type="text" name="email" class="form-control" />
     </div>
-    <button type="button" class="btn btn-primary d-block mt-3" onclick="otp1">
-      Verify
-    </button>
-        <div class="mb-3">
-          <label for="password" class="form-label">New Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="fpassword"
-          />
-          
-        <div class="mb-3">
-            <label for="password" class="form-label"
-              >Confirm New Password</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="cfpassword"
-            />
-        </div>
-        <button type="submit" class="btn btn-primary" onclick="otp1()">Submit</button>
-      </form>
-      
-    <p style="color: red">&nbsp;&nbsp;&nbsp;{{efgh}}</p>
-    <p style="color: red">&nbsp;&nbsp;&nbsp;{{abcd}}</p>
-    </div>
-
-
-
-
+    <button class="btn" type="submit">Submit</button>
+  </form>
+</div>
 
 {% endblock body %}

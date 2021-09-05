@@ -1,45 +1,36 @@
 {% extends 'navbarhome.html' %} {% block title %}Login {% endblock title %}
 {%block body %}
-<div id="login" class="mt-5">
-  <form class="w-50 m-auto mt-5" method="POST" action="/login">
+
+<div class="continer">
+  <form method="post" class="form" id="form">
+    <h1>Login</h1>
     {% csrf_token %}
-    <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="email" name="email" />
-    </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
+    <div class="form-group">
+      <label for="username">Username</label>
       <input
-        type="password"
+        type="email"
+        name="email"
+        id="email"
         class="form-control"
-        id="password"
-        name="password"
+        required
       />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="/register">
-      <button
-        type="button"
-        class="btn btn-link"
-        style="color: black; font-weight: bloder; font-size: large"
-      >
-        If not registered click here
-      </button>
-    </a>
-    <a href="/forgot">
-      <button
-        type="button"
-        class="btn btn-link"
-        style="color: black; font-weight: bloder; font-size: large"
-      >
-        Forgot Password
-      </button>
-    </a>
 
-    {% for message in messages %}
-    <p style="color: red">INVALID USERNAME OR PASSWORD</p>
-    {% endfor %}
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        class="form-control"
+        required
+      />
+    </div>
+    <a href="/forgot">Forgot Password</a>
+    <br />
+    <a href="/register">Register</a>
+
+    <button class="btn btn-danger mt-4" type="submit">Submit</button>
   </form>
 </div>
-
 {% endblock body %}

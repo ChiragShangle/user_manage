@@ -17,9 +17,89 @@
     />
     <title> {% block title %} {% endblock title %} </title>
   </head>
+   <style>
+        
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background-color: rgb(246, 255, 255);
+
+}
+
+
+.continer{
+
+    background-color: rgb(253, 253, 253);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+
+}
+
+.continer h1{
+    text-align: center;
+ }
+
+.form{
+    padding: 30px 40px;
+    width: 90%;
+}
+
+.form-control{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    position: relative;
+}
+
+label{
+  margin-bottom: 0 !important;
+}
+.form-control label{
+    display: block;
+
+}
+
+.form-control input{
+    width: 100%;
+    padding: 5px 15px;
+    font-size: 16px;
+    border: 1px solid rgb(158, 158, 158);
+}
+
+
+.form-control input:focus{
+    outline: none;
+    border: 1px solid rgb(110, 110, 110)
+}
+
+
+.form button.btn{
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(238, 155, 0);
+    color: #fff;
+ 
+    
+}
+    </style>
+   
   <body
-    style="background-image: url(/static/DRDO.jpg); background-size: cover"
+    style="background-image: url(/static/DRDO.png); background-size: cover"
   >
+  
     <nav class="navbar navbar-dark bg-dark">
      <a href="/">
       <h3 class="text-info" style="cursor: pointer"">
@@ -27,7 +107,7 @@
       </h3>
     </a>
       <div>
-        <a href="/login"
+        <a href="/log"
           ><button
             type="button"
             class="btn btn-warning"
@@ -47,32 +127,24 @@
         </a>
       </div>
     </nav>
+     
+<div
+class="base"
+style="
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 92%;
+"
+>
    {% block body %}{% endblock body %}
+  </div>
+  
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-     function login() {
-  document.getElementById("default").style.display = "none";
-  document.getElementById("login").style.display = "initial";
-
-  document.getElementById("register").style.display = "none";
-}
-
-function register() {
-  document.getElementById("default").style.display = "none";
-  document.getElementById("register").style.display = "initial";
-  document.getElementById("login").style.display = "none";
-}
-function def() {
-  document.getElementById("default").style.display = "initial";
-  document.getElementById("register").style.display = "none";
-  document.getElementById("login").style.display = "none";
-}
-      function otp1() {
-        document.getElementById("otp1").style.display = "initial";
-      }
-
-      function otp2() {
-        document.getElementById("otp2").style.display = "initial";
-      }
+  {% for msg in messages %}
+  swal("{{msg}}");
+  {% endfor %}
 </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

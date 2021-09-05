@@ -18,8 +18,84 @@
 
     <title>{% block title %} {% endblock title %}</title>
   </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
-  <body style="background-color: #ffe7c7">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+      background-color: rgb(246, 255, 255);
+    }
+
+    .continer {
+      background-color: rgb(253, 253, 253);
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 600px;
+    }
+
+    .continer h1 {
+      text-align: center;
+    }
+
+    .form {
+      padding: 30px 40px;
+      width: 90%;
+    }
+
+    .form-control {
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      position: relative;
+    }
+
+    label {
+      margin-bottom: 0 !important;
+    }
+    .form-control label {
+      display: block;
+    }
+
+    .form-control input {
+      width: 100%;
+      padding: 5px 15px;
+      font-size: 16px;
+      border: 1px solid rgb(158, 158, 158);
+    }
+
+    .form-control input:focus {
+      outline: none;
+      border: 1px solid rgb(110, 110, 110);
+    }
+
+    .form button.btn {
+      width: 100%;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      background-color: rgb(238, 155, 0);
+      color: #fff;
+    }
+  </style>
+
+  <body
+    style="
+      background: linear-gradient(
+        to right,
+        rgb(196, 161, 201),
+        rgb(150, 223, 162)
+      );
+    "
+  >
     <nav class="navbar navbar-dark bg-dark">
       <div
         class="d-flex"
@@ -39,19 +115,27 @@
         </a>
       </div>
     </nav>
-    {% block body %}{% endblock body %}
+    <div
+      class="base"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 92%;
+      "
+    >
+      {% block body %}{% endblock body %}
+    </div>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      {% for msg in messages %}
+      swal("{{msg}}");
+      {% endfor %}
+    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script>
-      function otp1() {
-        document.getElementById("otp1").style.display = "initial";
-      }
 
-      function otp2() {
-        document.getElementById("otp2").style.display = "initial";
-      }
-    </script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
