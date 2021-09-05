@@ -119,7 +119,6 @@ def forgot(request):
             profile_obj.save()
             send_forget_password_mail(email, token)
             return redirect('/token')
-
     except Exception as e:
         print(e)
     return render(request, 'forgot.html')
@@ -138,6 +137,9 @@ def edit(request):
         obj = Details(email=username, name=name, password=password,
                       dob=date,  phone=phone)
         obj.save()
+        messages.info(
+            request, 'YOUR DETAILS HAVE BEEN EDITED SUCCESSFULLY')
+
         return redirect('/dash')
     return render(request, "edit.html", {"details": details})
 
@@ -174,8 +176,9 @@ def change(request):
         u.set_password(npassword)
         u.save()
         messages.info(
-            request, 'Your password has been changed successfully! Please Login Again')
-        return redirect("/logout")
+            request, 'YOUR PASSWORD HAS BEEN CHANGED SUCCESSFULLY, PLEASE LOGIN AGAIN')
+
+        return render(request, "success.html")
     return render(request, "change.html")
 
 
@@ -209,6 +212,12 @@ def ChangePassword(request, token):
         user_obj = User.objects.get(id=user_id)
         user_obj.set_password(new_password)
         user_obj.save()
+        username = user_obj.username
+        profile_obj = Details.objects.get(email=username)
+        profile_obj.password = new_password
+        profile_obj.save()
+        messages.success(request, 'PASSWORD CHANGED SUCCESSFULLY')
+
         return redirect('/log')
 
     return render(request, 'change-password.html', context)

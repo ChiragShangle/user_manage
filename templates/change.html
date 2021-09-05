@@ -1,5 +1,6 @@
-{% extends 'navbaruser.html' %}  {% block body %} 
-  
+{% extends 'navbaruser.html' %} 
+ {% block title %}Change password {% endblock title %}
+ {% block body %} 
   <div class="continer">
     <form method="post" class="form" id="form" action="/change">
       {% csrf_token %}
