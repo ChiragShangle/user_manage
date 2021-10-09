@@ -12,9 +12,13 @@ urlpatterns = [
     path('dash', views.dash, name='dash'),
     path('logout', views.logout_user, name='logout'),
     path('forgot', views.forgot, name='forgot'),
-    path('change-password/<token>', views.ChangePassword, name="change-password"),
-    path('verify/<auth_token>', views.verify, name='verify'),
+    path('change-password/<otp>', views.ChangePassword, name="change-password"),
     path('token', views.token_send, name='token_send'),
+    path('otp', views.otp, name='otp'),
+    path('fotp/<email>', views.fotp, name='fotp'),
+    path('info', views.info, name='info'),
+    path('draft', views.draft, name='draft'),
+    path('submit', views.submit, name='submit'),
 
 
 ]

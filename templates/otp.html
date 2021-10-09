@@ -1,0 +1,17 @@
+{% extends 'navbarhome.html' %} 
+ {% block title %}Otp{% endblock title %}
+{% block body %}
+
+<div class="continer" style"width:600px>
+  <form class="form px" method="post" id="form"   style="width:90%">
+    {% csrf_token %}
+    <h4>Enter Otp</h4> 
+    <div class="form-group">
+          <label for="phone">Otp</label>
+          <input type="phone" id="phone" name="otp" class="form-control" required />
+        </div>
+    <button class="btn" type="submit">Submit</button>
+  </form>
+</div>
+
+{% endblock body %}

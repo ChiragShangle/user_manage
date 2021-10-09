@@ -99,7 +99,7 @@
     <nav class="navbar navbar-dark bg-dark">
       <div
         class="d-flex"
-        style="justify-content: space-between; margin-left: 50px; width: 50%"
+        style="justify-content: space-between; margin-left: 10px; width:80%"
       >
         <a href="/dash">
           <h3 class="text-info" onclick="details()">User Management</h3>
@@ -109,6 +109,9 @@
         </a>
         <a href="/change">
           <button type="button" class="btn btn-success">Change Password</button>
+        </a>
+        <a href="/info">
+          <button type="button" class="btn btn-primary">Add More Info</button>
         </a>
         <a href="/logout">
           <button type="button" class="btn btn-light">Logout</button>
@@ -121,7 +124,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 92%;
       "
     >
       {% block body %}{% endblock body %}

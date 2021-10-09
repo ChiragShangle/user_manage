@@ -9,13 +9,15 @@ import uuid
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+import random
 
 
 @login_required(login_url="/log")
 def dash(request):
     username = request.user.username
     details = Details.objects.filter(email=username)
-    return render(request, 'dashboard.html', {"details": details})
+    info = Addinfo.objects.filter(email=username)
+    return render(request, 'dashboard.html', {"details": details, "info": info})
 
 
 def index(request):
@@ -75,32 +77,46 @@ def register(request):
             user = User.objects.create_user(username=email, password=password)
             user.save()
             user = authenticate(username=email, password=password)
-            auth_token = str(uuid.uuid4())
+            otp = str(random.randint(100000, 999999))
             profile_obj = Profile.objects.create(
-                user=user, auth_token=auth_token)
+                user=user, otp=otp)
             profile_obj.save()
-            send_mail_after_registration(email, auth_token)
-
+            send_otp_mail(email, otp)
             if user is not None:
                 login(request, user)
-                return redirect('/token')
+                return redirect('/otp')
             else:
                 return redirect('login')
     return render(request, 'register.html')
 
 
-def verify(request, auth_token):
-    profile_obj = Profile.objects.filter(auth_token=auth_token).first()
-    if profile_obj:
-        if profile_obj.is_verified:
+def send_otp_mail(email, otp):
+    subject = "Your account needs to be verified"
+    message = f"Otp to register is {otp}"
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = {email}
+    send_mail(subject, message, email_from, recipient_list)
+
+
+def otp(request):
+    messages.info(
+        request, 'ENTER OTP SEND ON YOUR MAIL')
+    username = request.user.username
+    if request.method == 'POST':
+        otp = request.POST.get('otp')
+        user_obj = User.objects.get(username=username)
+        profile_obj = Profile.objects.filter(user=user_obj).first()
+        if profile_obj.otp == otp:
+            profile_obj.is_verified = True
+            profile_obj.save()
             messages.info(
-                request, 'EMAIL IS ALREADY VERIFIED')
+                request, 'EMAIL HAS BEEN VERIFIED PLEASE LOGIN')
             return redirect('/log')
-        profile_obj.is_verified = True
-        profile_obj.save()
-        messages.info(
-            request, 'EMAIL HAS BEEN VERIFIED')
-        return redirect('/log')
+        else:
+            messages.info(
+                request, 'INVALID OTP')
+            return render(request, 'otp.html')
+    return render(request, 'otp.html')
 
 
 def forgot(request):
@@ -111,17 +127,75 @@ def forgot(request):
             if not User.objects.filter(username=email).first():
                 messages.success(request, 'No user found with this username.')
                 return redirect('/forgot')
-
             user_obj = User.objects.get(username=email)
-            token = str(uuid.uuid4())
+            otp = str(random.randint(100000, 999999))
             profile_obj = Profile.objects.get(user=user_obj)
-            profile_obj.forget_password_token = token
+            profile_obj.otp = otp
             profile_obj.save()
-            send_forget_password_mail(email, token)
-            return redirect('/token')
+            send_forget_password_mail(email, otp)
+            return redirect(f'/fotp/{email}')
     except Exception as e:
         print(e)
     return render(request, 'forgot.html')
+
+
+def fotp(request, email):
+
+    messages.info(
+        request, 'ENTER OTP SEND ON YOUR MAIL')
+    if request.method == 'POST':
+        otp = request.POST.get('otp')
+        user_obj = User.objects.filter(username=email).first()
+        profile_obj = Profile.objects.filter(user=user_obj).first()
+        if profile_obj.otp == otp:
+            messages.info(
+                request, 'EMAIL HAS BEEN VERIFIED')
+            return redirect(f'/change-password/{otp}')
+        else:
+            messages.info(
+                request, 'INVALID OTP')
+            return render(request, 'otp.html')
+    return render(request, 'otp.html')
+
+
+def send_forget_password_mail(email, otp):
+    subject = "Yout account neeeds to be verrified"
+    message = f"Otp to change your password is {otp}"
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = {email}
+    send_mail(subject, message, email_from, recipient_list)
+
+
+def ChangePassword(request, otp):
+    context = {}
+    profile_obj = Profile.objects.filter(
+        otp=otp).first()
+    context = {'user_id': profile_obj.user.id}
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('reconfirm_password')
+        user_id = request.POST.get('user_id')
+
+        if user_id is None:
+            messages.success(request, 'No USER IS FOUND')
+            return redirect(f'/change-password/{otp}')
+
+        if new_password != confirm_password:
+            messages.success(request, 'BOTH PASSWORD MUST BE EQUAL')
+            return redirect(f'/change-password/{otp}')
+
+        user_obj = User.objects.get(id=user_id)
+        user_obj.set_password(new_password)
+        user_obj.save()
+        username = user_obj.username
+        profile_obj = Details.objects.get(email=username)
+        profile_obj.password = new_password
+        profile_obj.save()
+        messages.success(request, 'PASSWORD CHANGED SUCCESSFULLY')
+
+        return redirect('/log')
+
+    return render(request, 'change-password.html', context)
 
 
 @login_required(login_url="/log")
@@ -142,6 +216,92 @@ def edit(request):
 
         return redirect('/dash')
     return render(request, "edit.html", {"details": details})
+
+
+@login_required(login_url="/log")
+def info(request):
+    username = request.user.username
+
+    if Addinfo.objects.filter(email=username).exists() and Addinfo.objects.filter(is_submitted=0):
+        return redirect('/draft')
+    elif Addinfo.objects.filter(is_submitted=1) and Addinfo.objects.filter(email=username).exists():
+        return redirect('/submit')
+
+    elif request.method == 'POST' and 'saveasdraft' in request.POST:
+        designation = request.POST.get('designation')
+        address = request.POST.get('address')
+        pin = request.POST.get('pin')
+        city = request.POST.get('city')
+        officeno = request.POST.get('officeno')
+
+        obj = Addinfo(email=username, designation=designation,
+                      address=address, city=city, pin=pin, officeno=officeno, is_submitted=False)
+        obj.save()
+        messages.info(
+            request, 'DRAFT SAVED')
+        return redirect('/dash')
+    elif request.method == 'POST' and 'submitbtn' in request.POST:
+        designation = request.POST.get('designation')
+        address = request.POST.get('address')
+        pin = request.POST.get('pin')
+        city = request.POST.get('city')
+        officeno = request.POST.get('officeno')
+        obj = Addinfo(email=username, designation=designation,
+                      address=address, city=city, pin=pin, officeno=officeno, is_submitted=True)
+        obj.save()
+
+        messages.info(
+            request, 'INFORMATION SUBMITTED')
+        return redirect('/dash')
+    return render(request, 'add_info.html')
+
+
+@login_required(login_url="/log")
+def draft(request):
+    username = request.user.username
+    info = Addinfo.objects.filter(email=username)
+    if request.method == 'POST' and 'savedraft' in request.POST:
+        designation = request.POST.get('designation')
+        address = request.POST.get('address')
+        pin = request.POST.get('pin')
+        city = request.POST.get('city')
+        officeno = request.POST.get('officeno')
+        obj = Addinfo(email=username, designation=designation,
+                      address=address, city=city, pin=pin, officeno=officeno, is_submitted=False)
+        obj.save()
+        messages.info(
+            request, 'DRAFT SAVED')
+        return redirect('/dash')
+    elif request.method == 'POST' and 'submitbt' in request.POST:
+        designation = request.POST.get('designation')
+        address = request.POST.get('address')
+        pin = request.POST.get('pin')
+        city = request.POST.get('city')
+        officeno = request.POST.get('officeno')
+        obj = Addinfo(email=username, designation=designation,
+                      address=address, city=city, pin=pin, officeno=officeno, is_submitted=True)
+        obj.save()
+        messages.info(
+            request, 'INFORMATION SUBMITTED')
+        return redirect('/dash')
+
+    return render(request, 'draft.html', {"info": info})
+
+
+@login_required(login_url="/log")
+def submit(request):
+    username = request.user.username
+    info = Addinfo.objects.filter(email=username)
+    for inf in info:
+        designation = inf.designation
+        address = inf.address
+        city = inf.city
+        pin = inf.pin
+        officeno = inf.officeno
+        obj = Addinfo(email=username, designation=designation,
+                      address=address, city=city, pin=pin, officeno=officeno, is_submitted=True)
+        obj.save()
+    return render(request, 'save.html', {"info": info})
 
 
 @login_required(login_url="/log")
@@ -191,53 +351,5 @@ def logout_user(request):
         return redirect('/home')
 
 
-def ChangePassword(request, token):
-    context = {}
-    profile_obj = Profile.objects.filter(
-        forget_password_token=token).first()
-    context = {'user_id': profile_obj.user.id}
-    if request.method == 'POST':
-        new_password = request.POST.get('new_password')
-        confirm_password = request.POST.get('reconfirm_password')
-        user_id = request.POST.get('user_id')
-
-        if user_id is None:
-            messages.success(request, 'No USER IS FOUND')
-            return redirect(f'/change-password/{token}')
-
-        if new_password != confirm_password:
-            messages.success(request, 'BOTH PASSWORD MUST BE EQUAL')
-            return redirect(f'/change-password/{token}')
-
-        user_obj = User.objects.get(id=user_id)
-        user_obj.set_password(new_password)
-        user_obj.save()
-        username = user_obj.username
-        profile_obj = Details.objects.get(email=username)
-        profile_obj.password = new_password
-        profile_obj.save()
-        messages.success(request, 'PASSWORD CHANGED SUCCESSFULLY')
-
-        return redirect('/log')
-
-    return render(request, 'change-password.html', context)
-
-
 def token_send(request):
     return render(request, 'token_send.html')
-
-
-def send_mail_after_registration(email, token):
-    subject = "Yout account neeeds to be verrified"
-    message = f"Click the link to verify your account http://127.0.0.1:8000/verify/{token}"
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = {email}
-    send_mail(subject, message, email_from, recipient_list)
-
-
-def send_forget_password_mail(email, token):
-    subject = "Yout account neeeds to be verrified"
-    message = f"Click the link to change your password http://127.0.0.1:8000/change-password/{token}"
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = {email}
-    send_mail(subject, message, email_from, recipient_list)
