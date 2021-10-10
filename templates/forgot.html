@@ -1,0 +1,17 @@
+{% extends 'navbarhome.html' %} 
+ {% block title %}Forgot Password {% endblock title %}
+{% block body %}
+
+<div class="continer" style"width:600px>
+  <form class="form px" method="post" id="form" action="/forgot"  style="width:90%">
+    {% csrf_token %}
+    <h4>Forget Password</h4>
+    <div class="form-group">
+      <label for="password">Email</label>
+      <input type="text" name="email" class="form-control" />
+    </div>
+    <button class="btn" type="submit">Submit</button>
+  </form>
+</div>
+
+{% endblock body %}

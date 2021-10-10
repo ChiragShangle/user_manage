@@ -1,0 +1,54 @@
+{% extends 'navbaruser.html' %} {% block title %}Edit Details {% endblock title %} {% block body %}
+
+<div class="continer" style="width: 600px">
+  <form
+    method="post"
+    class="form px-0"
+    id="form"
+    action="/edit"
+    style="width: 90%"
+  >
+    {% csrf_token %}
+    <h4 style="font-weight: bolder">Edit Details</h4>
+    {% for det in details %}
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        class="form-control"
+        value="{{det.name}}"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Mobile Number</label>
+      <input
+        type="phone"
+        id="phone"
+        name="phone"
+        class="form-control"
+        value="{{det.phone}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="date" class="form-label">Date Of Birth</label>
+      <input
+        type="date"
+        class="form-control"
+        id="date"
+        name="date"
+        value="{{det.dob}}"
+        required
+      />
+    </div>
+    <button class="btn btn-success mt-3" type="submit">Submit</button>
+    {% endfor %}
+  </form>
+</div>
+
+{% endblock body %}

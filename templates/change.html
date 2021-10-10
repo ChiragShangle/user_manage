@@ -1,0 +1,29 @@
+{% extends 'navbaruser.html' %} 
+ {% block title %}Change password {% endblock title %}
+ {% block body %} 
+  <div class="continer">
+    <form method="post" class="form" id="form" action="/change">
+      {% csrf_token %}
+      <h4 style="font-weight: bolder;">Change Password</h4>
+      <div class="form-group">
+        <label for="password">Old Password</label>
+        <input type="password" name="opassword" class="form-control" required/>
+      </div>
+      <div class="form-group">
+        <label for="password">New Password</label>
+        <input type="password" name="npassword" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Confirm New password</label>
+        <input type="password" name="cnpassword" class="form-control" required/>
+      </div>
+
+      <input type="hidden" name="user_id" value="{{user_id}}" />
+
+      <button class="btn" type="submit">Submit</button>
+    </form>
+  </div>
+
+  {% endblock body %}
+</form>

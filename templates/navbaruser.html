@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <title>{% block title %} {% endblock title %}</title>
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+      background-color: rgb(246, 255, 255);
+    }
+
+    .continer {
+      background-color: rgb(253, 253, 253);
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 600px;
+    }
+
+    .continer h1 {
+      text-align: center;
+    }
+
+    .form {
+      padding: 30px 40px;
+      width: 90%;
+    }
+
+    .form-control {
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      position: relative;
+    }
+
+    label {
+      margin-bottom: 0 !important;
+    }
+    .form-control label {
+      display: block;
+    }
+
+    .form-control input {
+      width: 100%;
+      padding: 5px 15px;
+      font-size: 16px;
+      border: 1px solid rgb(158, 158, 158);
+    }
+
+    .form-control input:focus {
+      outline: none;
+      border: 1px solid rgb(110, 110, 110);
+    }
+
+    .form button.btn {
+      width: 100%;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      background-color: rgb(238, 155, 0);
+      color: #fff;
+    }
+  </style>
+
+  <body
+    style="
+      background: linear-gradient(
+        to right,
+        rgb(196, 161, 201),
+        rgb(150, 223, 162)
+      );
+    "
+  >
+    <nav class="navbar navbar-dark bg-dark">
+      <div
+        class="d-flex"
+        style="justify-content: space-between; margin-left: 10px; width:80%"
+      >
+        <a href="/dash">
+          <h3 class="text-info" onclick="details()">User Management</h3>
+        </a>
+        <a href="/edit">
+          <button type="button" class="btn btn-warning">Edit Details</button>
+        </a>
+        <a href="/change">
+          <button type="button" class="btn btn-success">Change Password</button>
+        </a>
+        <a href="/info">
+          <button type="button" class="btn btn-primary">Add More Info</button>
+        </a>
+        <a href="/logout">
+          <button type="button" class="btn btn-light">Logout</button>
+        </a>
+      </div>
+    </nav>
+    <div
+      class="base"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      {% block body %}{% endblock body %}
+    </div>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      {% for msg in messages %}
+      swal("{{msg}}");
+      {% endfor %}
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
